@@ -1,33 +1,20 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.22)
 
-project(hello_library)
+project(static_library)
 
-############################################################
-# Create a library
-############################################################
-
-#Generate the static library from the library sources
-add_library(hello_library STATIC 
+set(
+    hello_library_src
     src/Hello.cpp
 )
-
-target_include_directories(hello_library
-    PUBLIC 
-        ${PROJECT_SOURCE_DIR}/include
+add_library(
+    hello_library
+    STATIC
+    ${hello_library_src}
 )
-
-
-############################################################
-# Create an executable
-############################################################
-
-# Add an executable with the above sources
-add_executable(hello_binary 
-    src/main.cpp
+target_include_directories(
+    hello_library
+    PUBLIC
+    include
 )
-
-# link the new hello_library target with the hello_binary target
-target_link_libraries( hello_binary
-    PRIVATE 
-        hello_library
-)
+add_executable(${PROJECT_NAME} src/main.cpp)
+target_link_libraries(${PROJECT_NAME} PRIVATE hello_library)
