@@ -6,6 +6,7 @@ set(
     hello_library_src
     src/Hello.cpp
 )
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_library(
     hello_library
     SHARED
@@ -21,6 +22,8 @@ add_library(
     ALIAS
         hello_library   
 )
+include(GenerateExportHeader)
+generate_export_header(hello_library)
 
 add_executable(
     ${PROJECT_NAME}
